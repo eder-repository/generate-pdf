@@ -5,12 +5,13 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:pdf/widgets.dart';
 
 class PdfInvoiceApi {
-  static Future<File> generate({required String name}) async {
+  static Future<File> generate(
+      {required String name, required lastname, required String ci}) async {
     final pdf = Document();
 
     pdf.addPage(MultiPage(
       build: (context) => [
-        buildHeader(name: name),
+        buildHeader(name: name, lastname: lastname, ci: ci),
         // SizedBox(height: 3 * PdfPageFormat.cm),
         // buildTitle(invoice),
         // buildInvoice(invoice),
@@ -23,23 +24,21 @@ class PdfInvoiceApi {
     return PdfApi.saveDocument(name: 'my_invoice.pdf', pdf: pdf);
   }
 
-  static Widget buildHeader({required String name}) => Column(
+  static Widget buildHeader(
+          {required String name,
+          required String lastname,
+          required String ci}) =>
+      Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: 1 * PdfPageFormat.cm),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              // buildSupplierAddress(invoice.supplier),
-              Container(
-                height: 50,
-                width: 50,
-                child: BarcodeWidget(
-                  barcode: Barcode.qrCode(),
-                  data: name,
-                ),
-              ),
-            ],
+          pw.Text('FACTURA DE:'),
+          SizedBox(height: 0.5 * PdfPageFormat.cm),
+          pw.Text('$name $lastname'),
+          SizedBox(height: 0.2 * PdfPageFormat.cm),
+          SizedBox(
+            height: 50,
+            child: pw.Text(ci),
           ),
           SizedBox(height: 1 * PdfPageFormat.cm),
           // Row(

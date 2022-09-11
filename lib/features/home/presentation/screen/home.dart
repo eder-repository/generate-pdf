@@ -30,7 +30,15 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              const FTextFormField(hintText: 'Ingrese sus apellidos'),
+              FTextFormField(
+                  controller: bloc.lastnameController,
+                  hintText: 'Ingrese sus apellidos'),
+              const SizedBox(
+                height: 20,
+              ),
+              FTextFormField(
+                  controller: bloc.numberCiController,
+                  hintText: 'Ingrese su numero de cedula'),
               const SizedBox(
                 height: 20,
               ),

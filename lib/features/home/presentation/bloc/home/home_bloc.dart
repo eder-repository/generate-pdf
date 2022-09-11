@@ -21,8 +21,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   late final TextEditingController _lastNameController;
   late final TextEditingController _totalController;
   late final TextEditingController _salaryController;
+  late final TextEditingController _numberCiController;
 
   TextEditingController get nameController => _nameController;
+
+  TextEditingController get numberCiController => _numberCiController;
 
   TextEditingController get lastnameController => _lastNameController;
 
@@ -35,10 +38,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     _lastNameController = TextEditingController();
     _totalController = TextEditingController();
     _salaryController = TextEditingController();
+    _numberCiController = TextEditingController();
   }
 
   Future<void> _generateInvoice(_Started event, Emitter<HomeState> emit) async {
-    final pdfFile = await PdfInvoiceApi.generate(name: _nameController.text);
+    final pdfFile = await PdfInvoiceApi.generate(
+        name: _nameController.text,
+        lastname: lastnameController.text,
+        ci: _numberCiController.text);
     PdfApi.openFile(pdfFile);
   }
 }
